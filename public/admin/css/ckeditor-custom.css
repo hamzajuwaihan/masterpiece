@@ -1,0 +1,9 @@
+.ck-editor h1,
+.ck-editor h2,
+.ck-editor h3,
+.ck-editor h4,
+.ck-editor h5,
+.ck-editor h6 {
+    color: #000 !important;
+}
+
