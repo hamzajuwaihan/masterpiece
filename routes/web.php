@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesForAdminController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\SubCategoriesForAdminController;
+use App\Http\Controllers\UpdatePostion;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,6 +53,8 @@ Route::resource('/admin/categories', CategoriesForAdminController::class);
 
 Route::resource('/admin/subcategories', SubCategoriesForAdminController::class);
 Route::resource('/admin/materials', MaterialController::class);
+Route::post('/upload-image-ck', ImageController::class)->name('ckeditor.upload');
+Route::post('/update-position', UpdatePostion::class)->name('update.position');
 // Falback route
 Route::fallback(function () {
     return view('layouts.404');

@@ -15,6 +15,7 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-upload": "^35.4.0",
         "ckeditor4": "^4.20.1"
     }
 }

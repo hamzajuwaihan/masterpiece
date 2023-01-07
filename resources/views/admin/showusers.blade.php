@@ -121,7 +121,7 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->type }}</td>
+                                    <td>{{ $user->role->name }}</td>
                                     <td><a class="btn btn-sm btn-info" href={{ route('users.edit', $user->id) }}>Edit</a>
                                     </td>
                                     <td>

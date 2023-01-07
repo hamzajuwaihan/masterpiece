@@ -30,4 +30,5 @@ class Sub_Category extends Model
     {
         return $this->hasMany(Material::class);
     }
+    
 }

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('instructor_courses', function (Blueprint $table) {
+        Schema::create('ck_photos', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('path');
             $table->timestamps();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instructor_courses');
+        //
     }
 };

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->unsignedBigInteger('course_id');
+            $table->foreignId('course_id')->constrained('sub_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('position')->default(0);
             $table->timestamps();
         });

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
+use App\Models\User_Role;
 use Illuminate\Http\Request;
 
 class UsersForAdminController extends Controller
@@ -15,7 +17,10 @@ class UsersForAdminController extends Controller
     public function index()
     {
         $users = User::get()->where('id', '!=', auth()->user()->id);
-
+        $users->map(function ($user) {
+            $user->role =  User_Role::where('user_id', $user->id)->first();
+            $user->role = Role::where('id', $user->role->role_id)->first();
+        });
         return view(
             'admin.showusers',
             [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Sub_Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MaterialController extends Controller
 {
@@ -43,7 +44,15 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $newMaterial = new Material();
+        $newMaterial->title = $request->title;
+        $newMaterial->content = $request->content;
+        $newMaterial->course_id = $request->course_id;
+        $newMaterial->save();
+
+
+
+        return redirect()->route('subcategories.edit', $request->course_id)->with('success', 'Material added successfully!');
     }
 
     /**
@@ -88,6 +97,7 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
-        //
+        Material::destroy($material->id);
+        return redirect()->route('subcategories.edit', $material->course_id)->with('success', 'Material deleted successfully!');
     }
 }

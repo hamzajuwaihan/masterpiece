@@ -30,10 +30,10 @@
 
     <!-- Template Stylesheet -->
     {{-- <link href={{ asset('admin/css/style.css') }} rel="stylesheet"> --}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
     <link rel="stylesheet" href="/node_modules/ckeditor4/contents.css">
     <link href={{ asset('admin/css/ckeditor-custom.css') }} rel="stylesheet">
-    @vite(['/public/admin/css/bootstrap.min.css', '/public/admin/js/main.js', '/public/admin/css/style.css', '/public/admin/js/custom.js']) 
+    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+    @vite(['/public/admin/css/bootstrap.min.css', '/public/admin/js/main.js', '/public/admin/css/style.css', '/public/admin/js/custom.js'])
 </head>
 
 <body>
@@ -115,6 +115,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src={{ asset('admin/lib/chart/chart.min.js') }}></script>
     <script src={{ asset('admin/lib/easing/easing.min.js') }}></script>
     <script src={{ asset('admin/lib/waypoints/waypoints.min.js') }}></script>
@@ -122,7 +123,6 @@
     <script src={{ asset('admin/lib/tempusdominus/js/moment.min.js') }}></script>
     <script src={{ asset('admin/lib/tempusdominus/js/moment-timezone.min.js') }}></script>
     <script src={{ asset('admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}></script>
-
     <!-- Template Javascript -->
     {{-- <script src={{ asset('admin/js/main.js') }}></script> --}}
     {{-- <script src="{{ asset('admin/js/custom.js') }}"></script> --}}

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Instructor_Course;
 use App\Models\Material;
+use App\Models\Role;
 use App\Models\Sub_Category;
+use App\Models\User;
+use App\Models\User_Role;
 use Illuminate\Http\Request;
 
 class SubCategoriesForAdminController extends Controller
@@ -87,11 +91,24 @@ class SubCategoriesForAdminController extends Controller
     {
         $subCategory = Sub_Category::find($id);
         $subCategory->category = Category::find($subCategory->category_id);
-        $subCategory->materials = Material::where('course_id', $subCategory->id)->get();
+        $subCategory->materials = Material::where('course_id', $subCategory->id)->orderBy('position', 'ASC')->get();
+        $instructorType = Role::where('name', 'instructor')->get();
+        $instructors = User_Role::where('role_id', $instructorType[0]->id)->get();
+        foreach ($instructors as $instructor) {
+            $instructor->user = User::find($instructor->user_id);
+        }
+
+        
+        $instructorCourses = Instructor_Course::where('course_id', $subCategory->id)->get();
+        foreach ($instructorCourses as $instructorCourse) {
+            $instructorCourse->instructor = User::find($instructorCourse->instructor_id);
+        }
         return view(
             'admin.editsubcategory',
             [
-                'subCategory' => $subCategory
+                'subCategory' => $subCategory,
+                'instructors' => $instructors,
+                'instructorCourses' => $instructorCourses
             ]
         );
     }
@@ -105,7 +122,34 @@ class SubCategoriesForAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'instructors' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $subCategory = Sub_Category::find($id);
+        $subCategory->name = $request->name;
+        $subCategory->description = $request->description;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $imageName);
+            $subCategory->image = $imageName;
+        }
+        $request->instructors = array_unique($request->instructors);
+        $instructors = $request->instructors;
+        foreach ($instructors as $instructor) {
+            $instructorCourse = new Instructor_Course();
+            $instructorCourse->user_id = $instructor;
+            $instructorCourse->course_id = $subCategory->id;
+            $instructorCourse->save();
+        }
+
+        $subCategory->save();
+        return redirect()->goback();
     }
 
     /**
