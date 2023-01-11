@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesForAdminController;
+use App\Http\Controllers\CourseTypesController;
+use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\SubCategoriesForAdminController;
@@ -55,6 +57,8 @@ Route::resource('/admin/subcategories', SubCategoriesForAdminController::class);
 Route::resource('/admin/materials', MaterialController::class);
 Route::post('/upload-image-ck', ImageController::class)->name('ckeditor.upload');
 Route::post('/update-position', UpdatePostion::class)->name('update.position');
+Route::resource('/dashboard/profile',DashboardProfileController::class);
+Route::resource('/dashboard/courseTypes',CourseTypesController::class);
 // Falback route
 Route::fallback(function () {
     return view('layouts.404');

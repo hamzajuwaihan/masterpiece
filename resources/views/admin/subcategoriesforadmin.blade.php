@@ -5,99 +5,8 @@
 
 @section('content')
     <div class="content">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <form class="d-none d-md-flex ms-4">
-                <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-            </form>
-            <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fa fa-envelope me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">Message</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src={{ asset('admin/img/user.jpg') }} alt=""
-                                    style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src={{ asset('admin/img/user.jpg') }} alt=""
-                                    style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src={{ asset('admin/img/user.jpg') }} alt=""
-                                    style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all message</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fa fa-bell me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">Notificatin</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Profile updated</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">New user added</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Password changed</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all notifications</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src={{ asset('admin/img/user.jpg') }} alt=""
-                            style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">My Profile</a>
-                        <a href="#" class="dropdown-item">Settings</a>
-                        <a href="#" class="dropdown-item">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+        @include('admin.layout.navbar')
+
 
 
 
@@ -137,12 +46,52 @@
                                                 name="description">
                                         </div>
                                         <div class="mb-3">
+                                            <label for="type" class="form-label">Type</label>
+                                            <select class="form-select bg-white" aria-label="Default select example"
+                                                id="type" name="course_type">
+                                                <option selected>Open this select menu</option>
+                                                @foreach ($courseTypes as $type)
+                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                @endforeach
+                                            </select>
+
+                                        <div class="mb-3">
                                             <label for="parent_id" class="form-label">Main Category</label>
-                                            <input class="form-control bg-white" list="datalistOptions"
-                                                id="exampleDataList" name="category_id" placeholder="Type to search...">
+                                            <input class="form-control bg-white" autocomplete="off"
+                                                list="datalistOptions" id="exampleDataList" name="category_id"
+                                                placeholder="Type to search...">
+
                                             <datalist id="datalistOptions">
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group mb-3" id="instructors-container">
+                                            <div class="d-flex mb-3">
+                                                <h4>Instructors</h4>
+                                                <button type="button" id="add-instructor"
+                                                    class="btn btn-info ms-auto">Add
+                                                    more
+                                                    instructors</button>
+
+                                            </div>
+                                            <div class="d-flex mt-3">
+                                                <label>Instructor name:</label>
+                                                <br>
+                                                <input type="text" list="instructor-names" autocomplete="off"
+                                                    name="instructors[]" class="form-control mb-3 me-2"
+                                                    placeholder="Type to search..." />
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+
+                                            <datalist id="instructor-names">
+                                                @foreach ($instructors as $instructor)
+                                                    <option value="{{ $instructor->user->id }}">
+                                                        {{ $instructor->user->name }}
+                                                    </option>
                                                 @endforeach
                                             </datalist>
                                         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CourseType;
 use App\Models\Instructor_Course;
 use App\Models\Material;
 use App\Models\Role;
@@ -25,12 +26,20 @@ class SubCategoriesForAdminController extends Controller
         foreach ($categories as $category) {
             $category->subCategories = Sub_Category::where('category_id', $category->id)->get();
         }
+        $instructorType = Role::where('name', 'instructor')->get();
+        $instructors = User_Role::where('role_id', $instructorType[0]->id)->get();
+        foreach ($instructors as $instructor) {
+            $instructor->user = User::find($instructor->user_id);
+        }
 
+        $courseTypes = CourseType::all();
         return view(
             'admin.subcategoriesforadmin',
             [
+                'courseTypes' => $courseTypes,
                 'subCategories' => $subCategories,
-                'categories' => $categories
+                'categories' => $categories,
+                'instructors' => $instructors
             ]
         );
     }
@@ -67,6 +76,15 @@ class SubCategoriesForAdminController extends Controller
             $subCategory->image = 'subCategorydefault.jpg';
         }
         $subCategory->save();
+        $instructors = $request->instructors;
+        $instructors = array_unique($instructors);
+        foreach($instructors as $instructor) {
+            $instructorCourse = new Instructor_Course();
+            $instructorCourse->user_id = $instructor;
+            $instructorCourse->course_id = $subCategory->id;
+            $instructorCourse->save();
+        }
+        
         return redirect()->route('subcategories.index');
     }
 
@@ -89,6 +107,7 @@ class SubCategoriesForAdminController extends Controller
      */
     public function edit($id)
     {
+
         $subCategory = Sub_Category::find($id);
         $subCategory->category = Category::find($subCategory->category_id);
         $subCategory->materials = Material::where('course_id', $subCategory->id)->orderBy('position', 'ASC')->get();
@@ -98,7 +117,7 @@ class SubCategoriesForAdminController extends Controller
             $instructor->user = User::find($instructor->user_id);
         }
 
-        
+
         $instructorCourses = Instructor_Course::where('course_id', $subCategory->id)->get();
         foreach ($instructorCourses as $instructorCourse) {
             $instructorCourse->instructor = User::find($instructorCourse->instructor_id);
@@ -128,8 +147,13 @@ class SubCategoriesForAdminController extends Controller
             'instructors' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         $subCategory = Sub_Category::find($id);
+        $existingInstructorCourses = Instructor_Course::where('course_id', $subCategory->id)->get();
+        foreach ($existingInstructorCourses as $existingInstructorCourse) {
+            if (!in_array($existingInstructorCourse->instructor_id, $request->instructors)) {
+                $existingInstructorCourse->delete();
+            }
+        }
         $subCategory->name = $request->name;
         $subCategory->description = $request->description;
         if ($request->hasFile('image')) {
@@ -149,7 +173,7 @@ class SubCategoriesForAdminController extends Controller
         }
 
         $subCategory->save();
-        return redirect()->goback();
+        return redirect()->route('subcategories.index');
     }
 
     /**

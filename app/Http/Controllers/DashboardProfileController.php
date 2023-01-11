@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Sub_Category;
 use App\Models\User;
-use App\Models\User_Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class AdminController extends Controller
+class DashboardProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,20 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $numberOfCourses = Sub_Category::all()->count();
-
-        //get role of Users 
-        $UserRole = Role::where('name', 'user')->get();
-        $numberOfUsers = User_Role::where('role_id', $UserRole[0]->id)->count();
-
-        return view(
-            'admin.index',
-            [
-                'numberOfCourses' => $numberOfCourses,
-                'numberOfUsers' => $numberOfUsers
-
-            ]
-        );
+        //
     }
 
     /**
@@ -73,7 +58,13 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view(
+            'admin.profile',
+            [
+                'user' => $user
+            ]
+        );
     }
 
     /**
@@ -85,7 +76,37 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate the form input
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required',
+            'password' => 'confirmed',
+        ]);
+
+        // Find the user to be updated
+        $user = User::findOrFail($id);
+
+        // Update the user's attributes
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        if($request->input('password') != null) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // If the user has uploaded a new image, update it
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $imageName);
+            $user->image = $imageName;
+        }
+
+        // Save the updated user
+        $user->save();
+
+        // Redirect the user to the users list with a success message
+        return redirect()->route('profile.edit', $id)->with('success', 'User updated successfully');
     }
 
     /**

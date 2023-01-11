@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
+                        <h6 class="mb-0">{{ Auth::user()->name }}</h6>
                         <span>Admin</span>
                     </div>
                 </div>
@@ -85,21 +85,18 @@
                             <a href={{ route('subcategories.index') }}
                                 class="dropdown-item {{ request()->is('admin/subcategories') ? 'active' : '' }}">Sub
                                 Categories</a>
+                            <a href={{ route('courseTypes.index') }}
+                                class="dropdown-item {{ request()->is('admin/courseTypes') ? 'active' : '' }}">course
+                                Types</a>
                         </div>
                     </div>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+
+                    {{-- <a href={{ route('posts.index') }}
+                        class="{{ request()->is('admin/posts') ? 'active' : '' }} nav-item nav-link"><i
+                            class="fa fa-th me-2"></i>Posts</a>
+                    <a href={{ route('comments.index') }}
+                        class="{{ request()->is('admin/comments') ? 'active' : '' }} nav-item nav-link"><i
+                            class="fa fa-th me-2"></i>Comments</a> --}}
                 </div>
             </nav>
         </div>

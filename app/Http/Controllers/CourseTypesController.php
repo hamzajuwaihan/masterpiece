@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Sub_Category;
-use App\Models\User;
-use App\Models\User_Role;
+use App\Models\CourseType;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class CourseTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,18 +14,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $numberOfCourses = Sub_Category::all()->count();
-
-        //get role of Users 
-        $UserRole = Role::where('name', 'user')->get();
-        $numberOfUsers = User_Role::where('role_id', $UserRole[0]->id)->count();
-
+        $courseTypes = CourseType::all();
         return view(
-            'admin.index',
+            'admin.coursetypesforadmin',
             [
-                'numberOfCourses' => $numberOfCourses,
-                'numberOfUsers' => $numberOfUsers
-
+                'courseTypes' => $courseTypes
             ]
         );
     }
@@ -51,7 +41,10 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newType = new CourseType();
+        $newType->name = $request->name;
+        $newType->save();
+        return redirect()->route('courseTypes.index');
     }
 
     /**

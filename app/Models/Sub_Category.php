@@ -31,4 +31,8 @@ class Sub_Category extends Model
         return $this->hasMany(Material::class);
     }
     
+    public function type()
+    {
+        return $this->belongsTo(CourseType::class);
+    }
 }

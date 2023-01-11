@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('course_types', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->foreignId('course_id')->constrained('sub__categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('position')->default(0);
+            $table->string('name');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('course_types');
     }
 };

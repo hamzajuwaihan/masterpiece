@@ -19,12 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-                DB::statement('
-            CREATE TRIGGER materials_before_insert
-            BEFORE INSERT ON materials
-            FOR EACH ROW
-            SET NEW.position = (SELECT COALESCE(MAX(position), 0) FROM materials) + 1;
-        ');
+
         Role::factory()->create(['name' => 'admin']);
         Role::factory()->create(['name' => 'instructor']);
         Role::factory()->create(['name' => 'user']);

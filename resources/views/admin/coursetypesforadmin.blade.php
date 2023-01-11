@@ -14,10 +14,10 @@
             <div class="bg-secondary rounded h-100 p-4">
 
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h5>All Categories</h5>
+                    <h5>All course types</h5>
                     <!-- add trigger modal -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add category
+                        Add course type
                     </button>
 
                     <!-- Modal -->
@@ -26,12 +26,13 @@
                         <div class="modal-dialog  centered">
                             <div class="modal-content bg-dark">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new category</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new course type</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
 
-                                <form method="POST" action="{{ route('categories.store') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('courseTypes.store') }}"
+                                    enctype="multipart/form-data">
                                     <div class="modal-body">
                                         @csrf
                                         <div class="mb-3">
@@ -39,15 +40,8 @@
                                             <input type="text" class="form-control bg-white" id="name"
                                                 name="name">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="description" class="form-label">Description</label>
-                                            <input type="text" class="form-control bg-white" id="description"
-                                                name="description">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="image" class="form-label">Image</label>
-                                            <input type="file" class="form-control" id="image" name="image">
-                                        </div>
+
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -65,44 +59,41 @@
                         <thead>
                             <tr class="text-white">
                                 <th scope="col">Name</th>
-                                <th scope="col">description</th>
-                                <th scope="col">image</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($courseTypes as $courseType)
                                 <tr>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ $category->description }}</td>
-                                    <td><img src="{{ asset('images/' . $category->image) }}" alt="" width="100px"
-                                            height="100px"></td>
+                                    <td>{{ $courseType->name }}</td>
+
                                     <td>
-                                        <a href="{{ route('categories.edit', $category->id) }}"
+                                        <a href="{{ route('courseTypes.edit', $courseType->id) }}"
                                             class="btn btn-primary">Edit</a>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $category->id }}">
+                                            data-bs-target="#deleteModal">
                                             Delete
                                         </button>
 
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('courseTypes.destroy', $courseType->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1"
+                                            <div class="modal fade" id="deleteModal" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content bg-dark">
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Delete
-                                                                {{ $category->name }}</h1>
+                                                                {{ $courseType->name }}</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Deleting this category will delete all the sub categories, are
+                                                            Deleting this course type will delete all the sub categories,
+                                                            are
                                                             you sure you want to delete?
                                                         </div>
                                                         <div class="modal-footer">

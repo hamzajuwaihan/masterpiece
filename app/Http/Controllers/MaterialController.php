@@ -74,7 +74,18 @@ class MaterialController extends Controller
      */
     public function edit(Material $material)
     {
-        //
+
+        $material = Material::find($material->id);
+        $subCategory = Sub_Category::find($material->course_id);
+
+
+        return view(
+            'admin.editmaterial',
+            [
+                'material' => $material,
+                'subCategory' => $subCategory
+            ]
+        );
     }
 
     /**
@@ -86,7 +97,14 @@ class MaterialController extends Controller
      */
     public function update(Request $request, Material $material)
     {
-        //
+        $newMaterial = Material::find($material->id);
+        $newMaterial->title = $request->title;
+        $newMaterial->content = $request->content;
+        $newMaterial->save();
+
+
+
+        return redirect()->route('subcategories.edit', $material->course_id)->with('success', 'Material added successfully!');
     }
 
     /**
