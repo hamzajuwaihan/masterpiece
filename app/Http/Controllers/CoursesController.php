@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseType;
+use App\Models\Sub_Category;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
@@ -13,7 +15,19 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        return view('courses');
+
+        $courseTypes = CourseType::all();
+        $courses = Sub_Category::all();
+        foreach ($courses as $course) {
+            $course->type = CourseType::where('id', $course->type_id)->first();
+        }
+        return view(
+            'courses',
+            [
+                'courses' => $courses,
+                'courseTypes' => $courseTypes
+            ]
+        );
     }
 
     /**

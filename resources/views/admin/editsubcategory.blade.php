@@ -66,8 +66,8 @@
                     <div class="form-group mb-3">
                         <label for="">Image</label>
                         <br />
-                        <img src="{{ asset('images/' . $subCategory->image) }}" id="image" alt=""
-                            width="100px" height="100px" class="mb-3">
+                        <img src="{{ asset('images/' . $subCategory->image) }}" id="image" alt="" width="100px"
+                            height="100px" class="mb-3">
                         <br />
                     </div>
 
@@ -114,9 +114,8 @@
                                                     data-bs-target="#exampleModal{{ $material->id }}">
                                                     Delete
                                                 </button>
-                                                <div class="modal fade" id="exampleModal{{ $material->id }}"
-                                                    tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
+                                                <div class="modal fade" id="exampleModal{{ $material->id }}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content bg-dark">
                                                             <div class="modal-header">
@@ -126,8 +125,7 @@
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form
-                                                                action="{{ route('materials.destroy', $material->id) }}">
+                                                            <form action="{{ route('materials.destroy', $material->id) }}">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <div class="modal-body">

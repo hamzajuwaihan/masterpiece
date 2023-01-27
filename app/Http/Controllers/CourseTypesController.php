@@ -78,7 +78,10 @@ class CourseTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $courseType = CourseType::find($id);
+        $courseType->name = $request->name;
+        $courseType->save();
+        return redirect()->route('courseTypes.index');
     }
 
     /**
@@ -89,6 +92,7 @@ class CourseTypesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        CourseType::destroy($id);
+        return redirect()->route('courseTypes.index');
     }
 }

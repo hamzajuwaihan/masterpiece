@@ -21,24 +21,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index');
+
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/about', function () {
-    return view('about');
-});
-//? Route for contact page
-Route::resource('/contact', App\Http\Controllers\ContactController::class);
+Route::middleware(['courseTypes'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/about', function () {
+        return view('about');
+    });
 
-//? Route for courses page
-Route::resource(
-    '/courses',
-    App\Http\Controllers\CoursesController::class
-);
+    Route::get('/', function () {
+    
+        return view('welcome');
+    })->name('index');
+
+    //? Route for contact page
+    Route::resource('/contact', App\Http\Controllers\ContactController::class);
+
+    //? Route for courses page
+    Route::resource(
+        '/courses',
+        App\Http\Controllers\CoursesController::class
+    );
+});
+
+
 
 
 //? Route for admin dashboard
@@ -57,8 +65,8 @@ Route::resource('/admin/subcategories', SubCategoriesForAdminController::class);
 Route::resource('/admin/materials', MaterialController::class);
 Route::post('/upload-image-ck', ImageController::class)->name('ckeditor.upload');
 Route::post('/update-position', UpdatePostion::class)->name('update.position');
-Route::resource('/dashboard/profile',DashboardProfileController::class);
-Route::resource('/dashboard/courseTypes',CourseTypesController::class);
+Route::resource('/dashboard/profile', DashboardProfileController::class);
+Route::resource('/dashboard/courseTypes', CourseTypesController::class);
 // Falback route
 Route::fallback(function () {
     return view('layouts.404');

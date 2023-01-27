@@ -54,12 +54,11 @@
                                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                 @endforeach
                                             </select>
-
+                                        </div>
                                         <div class="mb-3">
                                             <label for="parent_id" class="form-label">Main Category</label>
-                                            <input class="form-control bg-white" autocomplete="off"
-                                                list="datalistOptions" id="exampleDataList" name="category_id"
-                                                placeholder="Type to search...">
+                                            <input class="form-control bg-white" autocomplete="off" list="datalistOptions"
+                                                id="exampleDataList" name="category_id" placeholder="Type to search...">
 
                                             <datalist id="datalistOptions">
                                                 @foreach ($categories as $category)
@@ -70,8 +69,7 @@
                                         <div class="form-group mb-3" id="instructors-container">
                                             <div class="d-flex mb-3">
                                                 <h4>Instructors</h4>
-                                                <button type="button" id="add-instructor"
-                                                    class="btn btn-info ms-auto">Add
+                                                <button type="button" id="add-instructor" class="btn btn-info ms-auto">Add
                                                     more
                                                     instructors</button>
 

@@ -21,12 +21,12 @@
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    <div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabelAdd"
                         aria-hidden="true">
                         <div class="modal-dialog  centered">
                             <div class="modal-content bg-dark">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new course type</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabelAdd">Add new course type</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -69,19 +69,52 @@
                                     <td>{{ $courseType->name }}</td>
 
                                     <td>
-                                        <a href="{{ route('courseTypes.edit', $courseType->id) }}"
-                                            class="btn btn-primary">Edit</a>
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ $courseType->id }}">
+                                            Edit
+                                        </button>
+                                        <form action="{{ route('courseTypes.update', $courseType->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal fade" id="editModal{{ $courseType->id }}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content bg-dark">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit
+                                                                {{ $courseType->name }}</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Name</label>
+                                                                <input type="text" class="form-control bg-white"
+                                                                    id="name" name="name"
+                                                                    value="{{ $courseType->name }}">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal">
+                                            data-bs-target="#deleteModal{{ $courseType->id }}">
                                             Delete
                                         </button>
 
                                         <form action="{{ route('courseTypes.destroy', $courseType->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <div class="modal fade" id="deleteModal" tabindex="-1"
+                                            <div class="modal fade" id="deleteModal{{ $courseType->id }}" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content bg-dark">

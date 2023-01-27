@@ -9,20 +9,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto py-0">
             <a href="/" class="nav-item nav-link">Home</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
-                <div class="dropdown-menu m-0">
-                    <a href="#" class="dropdown-item">University courses</a>
-                    <a href="#" class="dropdown-item">School courses</a>
-                    <a href="#" class="dropdown-item">Short courses</a>
-                </div>
-            </div>
+            <a href="{{ route('courses.index') }}" class="nav-item nav-link">Courses</a>
+            
             <a href="/about" class="nav-item nav-link">About</a>
             <a href={{ route('contact.index') }} class="nav-item nav-link">Contact</a>
         </div>
         @guest
-            {{-- <div class="navbar-nav mx-auto py-0">
-        </div> --}}
+
 
             @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="btn rounded-pill py-2 px-4 d-none d-lg-block">{{ __('Login') }}</a>

@@ -75,16 +75,17 @@ class SubCategoriesForAdminController extends Controller
         } else {
             $subCategory->image = 'subCategorydefault.jpg';
         }
+        $subCategory->type_id = $request->course_type;
         $subCategory->save();
         $instructors = $request->instructors;
         $instructors = array_unique($instructors);
-        foreach($instructors as $instructor) {
+        foreach ($instructors as $instructor) {
             $instructorCourse = new Instructor_Course();
             $instructorCourse->user_id = $instructor;
             $instructorCourse->course_id = $subCategory->id;
             $instructorCourse->save();
         }
-        
+
         return redirect()->route('subcategories.index');
     }
 
