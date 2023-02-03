@@ -29,11 +29,13 @@
                 <h1 class="text-center mb-5">Recently Completed Courses</h1>
             </div>
             <div class="search">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search for courses" aria-label="Search for courses"
-                        aria-describedby="button-addon2">
-                    <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-                </div>
+                <form action="{{ route('courses.search') }}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search for courses"
+                            aria-label="Search for courses" aria-describedby="button-addon2" name="q">
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
             </div>
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="col-12 text-center">
@@ -48,25 +50,29 @@
             </div>
             <div class="row g-4 portfolio-container">
                 @foreach ($courses as $item)
-                    <div class="col-lg-4 col-md-6 portfolio-item {{ str_replace(' ', '', trim($item->type->name)) }} wow fadeInUp"
-                        data-wow-delay="0.1s">
-                        <div class="rounded overflow-hidden">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="{{ asset("images/$item->image") }}" alt="">
+                    <a href="{{ route('course.show',$item->id) }}">
+                        <div class="col-lg-4 col-md-6 portfolio-item {{ str_replace(' ', '', trim($item->type->name)) }} wow fadeInUp"
+                            data-wow-delay="0.1s">
+                            <div class="rounded overflow-hidden">
+                                <div class="position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="{{ asset("images/$item->image") }}" alt="">
 
-                            </div>
-                            <div class="bg-light p-4">
-                                <p class="text-primary fw-medium mb-2">{{ $item->name }}</p>
-                                <h5 class="lh-base mb-0">{{ $item->description }}</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                <h2 id="coming-soon" style="display: none;" class="text-center fs-5 text-primary">
-                    Coming Soon ..!
-                </h2>
+                                </div>
+                                <div class="bg-light p-4">
+                                    <p class="text-primary fw-medium mb-2">{{ $item->name }}</p>
+                                    <h5 class="lh-base mb-0">{{ $item->description }}
+                                </div>
+                    </a>
+
             </div>
         </div>
+        </a>
+        @endforeach
+        <h2 id="coming-soon" style="display: none;" class="text-center fs-5 text-primary">
+            Coming Soon ..!
+        </h2>
+    </div>
+    </div>
     </div>
     <!-- Projects End -->
 @endsection

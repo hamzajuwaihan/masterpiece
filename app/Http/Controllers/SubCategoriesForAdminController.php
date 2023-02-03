@@ -73,7 +73,7 @@ class SubCategoriesForAdminController extends Controller
             $image->move($destinationPath, $imageName);
             $subCategory->image = $imageName;
         } else {
-            $subCategory->image = 'subCategorydefault.jpg';
+            $subCategory->image = 'subCategorydefault.png';
         }
         $subCategory->type_id = $request->course_type;
         $subCategory->save();

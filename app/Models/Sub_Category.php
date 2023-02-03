@@ -20,19 +20,19 @@ class Sub_Category extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    public function courses()
-    {
-        return $this->hasMany(Course::class);
-    }
-
-    public function materials()
-    {
-        return $this->hasMany(Material::class);
-    }
     
     public function type()
     {
         return $this->belongsTo(CourseType::class);
+    }
+    public function instructors()
+    {
+        return $this->belongsToMany(Instructor_Course::class, 'instructor_courses', 'user_id');
+    }
+    
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class,'course_id');
     }
 }

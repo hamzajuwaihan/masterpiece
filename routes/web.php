@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesForAdminController;
+use App\Http\Controllers\CourseSearchController;
 use App\Http\Controllers\CourseTypesController;
 use App\Http\Controllers\DashboardProfileController;
+use App\Http\Controllers\GetCourseController;
+use App\Http\Controllers\GetRelatedMaterialToCourse;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\SubCategoriesForAdminController;
@@ -67,6 +70,9 @@ Route::post('/upload-image-ck', ImageController::class)->name('ckeditor.upload')
 Route::post('/update-position', UpdatePostion::class)->name('update.position');
 Route::resource('/dashboard/profile', DashboardProfileController::class);
 Route::resource('/dashboard/courseTypes', CourseTypesController::class);
+Route::get('search', CourseSearchController::class)->name('courses.search');
+Route::resource('course', GetCourseController::class);
+Route::get('course/{courseId}/material/{materialId}', GetRelatedMaterialToCourse::class)->name('show.related.materials');
 // Falback route
 Route::fallback(function () {
     return view('layouts.404');

@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Instructor_Course extends Model
 {
+
+
     use HasFactory;
 
+    
     protected $fillable = [
         'user_id',
         'course_id'
