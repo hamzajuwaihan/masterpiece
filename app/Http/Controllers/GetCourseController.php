@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CourseType;
+use App\Models\Instructor_Course;
 use App\Models\Sub_Category;
+use App\Models\User;
 use Illuminate\Http\Request;
-use PDO;
 
-class CoursesController extends Controller
+class GetCourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,19 +16,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-
-        $courseTypes = CourseType::all();
-        $courses = Sub_Category::all();
-        foreach ($courses as $course) {
-            $course->type = CourseType::where('id', $course->type_id)->first();
-        }
-        return view(
-            'courses',
-            [
-                'courses' => $courses,
-                'courseTypes' => $courseTypes
-            ]
-        );
+        //
     }
 
     /**
@@ -60,7 +48,17 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        //
+        $course = Sub_Category::find($id);
+        $course->materials = $course->materials()->get();
+        $course->instructors = Instructor_Course::where('course_id', $id)->get();
+        $course->instructors->map(function($instructor){
+            $instructor->user = User::find($instructor->user_id)->name;
+            return $instructor;
+        });
+        // dd($course);
+        return view('singlecourse',[
+            'course' => $course
+        ]);
     }
 
     /**
@@ -96,5 +94,4 @@ class CoursesController extends Controller
     {
         //
     }
-
 }

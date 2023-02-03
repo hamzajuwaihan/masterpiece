@@ -14,8 +14,6 @@ class Material extends Model
         'course_id',
         'position'
     ];
-    public function material()
-    {
-        return $this->belongsTo(Sub_Category::class);
-    }
+    
+    
 }
